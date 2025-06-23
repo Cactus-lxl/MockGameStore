@@ -1,0 +1,48 @@
+import './App.css'
+import Login from "./pages/Login.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import Cart from "./pages/Cart.jsx";
+import NewAcc from "./pages/NewAcc.jsx";
+import {Routes, Route} from "react-router-dom";
+import NavBar from "./components/NavBar.jsx";
+import {useState} from "react";
+import ProtectedRoute from "./service/ProtectedRoute.jsx";
+
+
+
+//component, returns some jsx code
+//always start with cap letter
+//the retrun can only have one root element,(can return other divs on the same level)
+function App() {
+  const [IsValid, setIsValid] = useState(()=>{
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
+
+  return (
+    <div>
+      <main className={"main-content"}>
+        <Routes>
+          <Route path={"/"} element={<Login setIsValid={setIsValid}/>}/>
+          <Route
+            path={"/home"}
+            element={
+              <ProtectedRoute isLoggedIn={IsValid}>
+                <HomePage/>
+              </ProtectedRoute>
+            } />
+          <Route path={"/cart"}
+                 element={
+                   <ProtectedRoute isLoggedIn={IsValid}>
+                     <Cart/>
+                   </ProtectedRoute>
+                 }/>
+          <Route path={"newacc"} element={<NewAcc/>}/>
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
+//can add property by adding {}
+
+export default App

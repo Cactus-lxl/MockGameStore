@@ -1,0 +1,32 @@
+.input-grid{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.login-icon{
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+}
+
+.login-info-grid{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+}
+
+.new-account{
+    align-self: end;
+    justify-self: end;
+}
+
+

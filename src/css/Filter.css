@@ -1,0 +1,14 @@
+.filter {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter select {
+    padding: 6px;
+    background-color: white;
+    color: black;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-size: 14px;
+}

@@ -1,15 +1,21 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
+
+// other com
 import GameInfo from "../components/GameInfo.jsx";
 import Filter from "../components/Filter.jsx";
-import "../css/HomePage.css";
+
+// api
 import { fetchGames } from "../service/gameAPI.js";
+
+// css
+import "../css/HomePage.css";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [allGames, setAllGames] = useState([]);
   const [visibleGames, setVisibleGames] = useState([]);
-  const [filter, setFilter] = useState({ Platform: "" });
+  const [filter, setFilter] = useState({ Platform: "", SubPlatform: "" });
   const [nextPageUrl, setNextPageUrl] = useState(null);
   const observerRef = useRef();
 
@@ -23,25 +29,45 @@ function HomePage() {
     const combined = [...allGames, ...newGames];
     setAllGames(combined);
     setNextPageUrl(nextPage);
-    filterAndSearch(combined, searchQuery, filter.Platform);
+    filterAndSearch(combined, searchQuery, filter.Platform, filter.SubPlatform);
   };
 
-  // Filter games that start with search input and match platform
-  const filterAndSearch = (gamesList, searchText, platform) => {
+  // Filter name must start with search query, and match platform
+  const filterAndSearch = (gamesList, searchText, platform, subPlatform) => {
     const filtered = gamesList.filter((game) => {
       const matchSearch = game.name.toLowerCase().startsWith(searchText.toLowerCase());
-      const matchPlatform = !platform || game.platforms?.some(p => p.name === platform);
+
+      const matchPlatform = (() => {
+        if (!platform) return true;
+
+        const platformNames = game.platforms?.map(p => p.name) || [];
+
+        if (platform === "Xbox" || platform ==="PlayStation") {
+          if (!subPlatform) {
+            // Show all game hosted by platform
+            return platformNames.some(name => name.toLowerCase().startsWith("xbox"));
+          } else {
+            // Show only specific sub-platform
+            return platformNames.includes(subPlatform);
+          }
+        }
+
+        // Exact match for non-Xbox platforms
+        return platformNames.includes(platform);
+      })();
+
       return matchSearch && matchPlatform;
     });
+
     setVisibleGames(filtered);
   };
 
-  // Update filtered list whenever user types or changes platform
+  // Update visible games when filters/search change
   useEffect(() => {
-    filterAndSearch(allGames, searchQuery, filter.Platform);
+    filterAndSearch(allGames, searchQuery, filter.Platform, filter.SubPlatform);
   }, [searchQuery, filter, allGames]);
 
-  // Lazy load
+  // Infinite scroll using Intersection Observer
   const observer = useCallback((node) => {
     if (observerRef.current) observerRef.current.disconnect();
     observerRef.current = new IntersectionObserver(entries => {

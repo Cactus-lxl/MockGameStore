@@ -1,3 +1,4 @@
+import{Link} from "react-router-dom";
 import "../css/GameInfo.css"
 
 function GameInfo({game}){
@@ -8,11 +9,15 @@ function GameInfo({game}){
   return(
     <div className={"Game"}>
       <div className={"Game-icon"}>
-        <img src={game.background_image} alt={game.name}/>
+        <Link to={`/details`}>
+          <img src={game.background_image} alt={game.name}/>
+        </Link>
       </div>
 
       <div className={"Game-info"}>
-        <h3>{game.name}</h3>
+        <Link to={`/details`}>
+          <h3>{game.name}</h3>
+        </Link>
 
         <button className={"cart-button"} onClick={addToCart}>
           Add to Cart

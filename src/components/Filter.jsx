@@ -8,12 +8,12 @@ function Filter({ filter, setFilter }) {
 
   return (
     <div className="filter">
-      <select name="Platform" value={filter.Platform} onChange={handleChange}>
-        <option value="">All Platforms</option>
-        <option value="Nintendo Switch">Nintendo Switch</option>
-        <option value="PC">PC</option>
-        <option value="Xbox">Xbox</option>
-        <option value="PlayStation">PlayStation</option>
+      <select name={"Platform"} value={filter.Platform} onChange={handleChange}>
+        <option value={""}>All Platforms</option>
+        <option value={"Nintendo Switch"}>Nintendo Switch</option>
+        <option value={"PC"}>PC</option>
+        <option value={"Xbox"}>Xbox</option>
+        <option value={"PlayStation"}>PlayStation</option>
       </select>
 
       {filter.Platform === "Xbox" && (

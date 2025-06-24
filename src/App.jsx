@@ -4,7 +4,6 @@ import HomePage from "./pages/HomePage.jsx";
 import Cart from "./pages/Cart.jsx";
 import NewAcc from "./pages/NewAcc.jsx";
 import {Routes, Route} from "react-router-dom";
-import NavBar from "./components/NavBar.jsx";
 import {useState} from "react";
 import ProtectedRoute from "./service/ProtectedRoute.jsx";
 

@@ -9,13 +9,13 @@ function GameInfo({game}){
   return(
     <div className={"Game"}>
       <div className={"Game-icon"}>
-        <Link to={`/details`}>
-          <img src={game.background_image} alt={game.name}/>
+        <Link to={"/details"} state={{ game }}>
+          <img src={game.background_image} alt={game.name} />
         </Link>
       </div>
 
       <div className={"Game-info"}>
-        <Link to={`/details`}>
+        <Link to={"/details"} state={{ game }}>
           <h3>{game.name}</h3>
         </Link>
 

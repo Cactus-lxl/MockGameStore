@@ -3,9 +3,11 @@ import Login from "./pages/Login.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import Cart from "./pages/Cart.jsx";
 import NewAcc from "./pages/NewAcc.jsx";
+import DetailsPage from "./pages/DetailsPage.jsx";
 import {Routes, Route} from "react-router-dom";
 import {useState} from "react";
 import ProtectedRoute from "./service/ProtectedRoute.jsx";
+
 
 
 
@@ -22,8 +24,7 @@ function App() {
       <main className={"main-content"}>
         <Routes>
           <Route path={"/"} element={<Login setIsValid={setIsValid}/>}/>
-          <Route
-            path={"/home"}
+          <Route path={"/home"}
             element={
               <ProtectedRoute isLoggedIn={IsValid}>
                 <HomePage/>
@@ -36,6 +37,14 @@ function App() {
                    </ProtectedRoute>
                  }/>
           <Route path={"newacc"} element={<NewAcc/>}/>
+          <Route path="/details"
+            element={
+              <ProtectedRoute isLoggedIn={IsValid}>
+                <DetailsPage />
+              </ProtectedRoute>
+            }
+          />
+
         </Routes>
       </main>
     </div>

@@ -1,15 +1,15 @@
 import{Link} from "react-router-dom";
+import {useCartContext} from "../context/CartContext.jsx";
 import "../css/GameInfo.css"
 
+
 function GameInfo({game}){
-  function addToCart(){
-    alert("Clicked")
-  }
+  const {addToCart} = useCartContext()
 
   return(
     <div className={"Game"}>
       <div className={"Game-icon"}>
-        <Link to={"/details"} state={{ game }}>
+        <Link to={"/details"} state={{game}}>
           <img src={game.background_image} alt={game.name} />
         </Link>
       </div>
@@ -19,9 +19,12 @@ function GameInfo({game}){
           <h3>{game.name}</h3>
         </Link>
 
-        <button className={"cart-button"} onClick={addToCart}>
-          Add to Cart
-        </button>
+        <div className={"add-to-cart"}>
+            <button className={"cart-button"}
+                    onClick={() => addToCart(game)}>
+              Add to Cart
+            </button>
+        </div>
       </div>
     </div>
   )

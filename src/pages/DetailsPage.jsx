@@ -1,3 +1,4 @@
+//what is useLocation and what does it do?
 import { useLocation } from "react-router-dom";
 
 function DetailsPage() {

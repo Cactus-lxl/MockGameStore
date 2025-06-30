@@ -4,12 +4,11 @@ import HomePage from "./pages/HomePage.jsx";
 import Cart from "./pages/Cart.jsx";
 import NewAcc from "./pages/NewAcc.jsx";
 import DetailsPage from "./pages/DetailsPage.jsx";
+import CheckOutPage from "./pages/CheckOutPage.jsx";
 import {Routes, Route} from "react-router-dom";
 import {useState} from "react";
 import ProtectedRoute from "./service/ProtectedRoute.jsx";
-
-
-
+import {CartProvider} from "./context/CartContext.jsx";
 
 //component, returns some jsx code
 //always start with cap letter
@@ -20,7 +19,7 @@ function App() {
   });
 
   return (
-    <div>
+    <CartProvider>
       <main className={"main-content"}>
         <Routes>
           <Route path={"/"} element={<Login setIsValid={setIsValid}/>}/>
@@ -36,7 +35,7 @@ function App() {
                      <Cart/>
                    </ProtectedRoute>
                  }/>
-          <Route path={"newacc"} element={<NewAcc/>}/>
+          <Route path={"/newacc"} element={<NewAcc/>}/>
           <Route path="/details"
             element={
               <ProtectedRoute isLoggedIn={IsValid}>
@@ -44,10 +43,16 @@ function App() {
               </ProtectedRoute>
             }
           />
-
+          <Route path="/checkoutpage"
+                 element={
+                   <ProtectedRoute isLoggedIn={IsValid}>
+                     <CheckOutPage />
+                   </ProtectedRoute>
+                 }
+          />
         </Routes>
       </main>
-    </div>
+    </CartProvider>
   );
 }
 

@@ -12,6 +12,7 @@ function HomePage() {
   const [filter, setFilter] = useState({ Platform: "", SubPlatform: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  //what does observerRef do? and what does useRef do?
   const observerRef = useRef();
 
   useEffect(() => {
@@ -56,6 +57,7 @@ function HomePage() {
     filterAndSearch(allGames, searchQuery, filter.Platform, filter.SubPlatform);
   }, [searchQuery, filter, allGames]);
 
+  //what is useCallBack and why do I need it?
   const observer = useCallback((node) => {
     if (observerRef.current) observerRef.current.disconnect();
     observerRef.current = new IntersectionObserver(entries => {

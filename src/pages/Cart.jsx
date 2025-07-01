@@ -10,9 +10,11 @@ function Cart(){
       <div>
         <Link to={"/home"}>Game Hub</Link>
 
-        {cartItem.map((game) => (
-          <CartItem key={game.id} game={game} />
-        ))}
+        <div className={"cart-gird"}>
+          {cartItem.map((game) => (
+            <CartItem key={game.id} game={game} />
+          ))}
+        </div>
 
         <Link to={"/checkoutpage"}>Check Out</Link>
       </div>

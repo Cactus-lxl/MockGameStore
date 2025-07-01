@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {useCartContext} from "../context/CartContext.jsx";
-import GameInfo from "../components/GameInfo.jsx";
+import CartItem from "../components/CartItem.jsx";
 
 function Cart(){
   const {cartItem} = useCartContext();
@@ -10,13 +10,11 @@ function Cart(){
       <div>
         <Link to={"/home"}>Game Hub</Link>
 
-        <div className={"cart-grid"}>
-          {cartItem.map((game) => (
-            <GameInfo game = {game}/>
-          ))}
-        </div>
+        {cartItem.map((game) => (
+          <CartItem key={game.id} game={game} />
+        ))}
 
-        <Link to={"/checkout"}>Check Out</Link>
+        <Link to={"/checkoutpage"}>Check Out</Link>
       </div>
     )
   }

@@ -20,17 +20,28 @@ export const CartProvider = ({children}) => {
   }, [cartItem]);
 
   const addToCart = (game) => {
-    setCartItem(prev => [...prev, game])
+    //since the API used does not have a price tag to it, generate a random number as the price
+    const withPrice = { ...game, price: Math.floor(Math.random() * (70 - 10 + 1)) + 10 };
+
+    setCartItem(prev => {
+      if (prev.some(item => item.id === game.id)) return prev;
+      return [...prev, withPrice];
+    });
   }
 
   const removeFromCart = (gameID) =>{
     setCartItem(prev => prev.filter(game => game.id !== gameID))
   }
 
+  const getTotalPrice = () => {
+    return cartItem.reduce((sum, item) => sum + (item.price || 0), 0);
+  };
+
   const value = {
     cartItem,
     addToCart,
-    removeFromCart
+    removeFromCart,
+    getTotalPrice
   }
 
 

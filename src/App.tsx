@@ -23,11 +23,7 @@ function App(): JSX.Element {
           <Route path="/" element={<Login setIsValid={setIsValid} />} />
           <Route 
             path="/home"
-            element={
-              <ProtectedRoute isLoggedIn={isValid}>
-                <HomePage />
-              </ProtectedRoute>
-            } 
+            element={<HomePage />} 
           />
           <Route 
             path="/cart"

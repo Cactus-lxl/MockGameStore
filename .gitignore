@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Ignore custom documentation files
+CHAT_CONVERSATION_SUMMARY.md
+PROJECT_DOCUMENTATION.md
+TYPESCRIPT_CONVERSION_SUMMARY.md
+UPDATE_SUMMARY_DEC2024.md
+

@@ -46,6 +46,7 @@
   align-items: center;
   max-width: 600px;
   margin: 0 auto;
+  position: relative;
 }
 
 .search-input {
@@ -68,6 +69,16 @@
 
 .search-input::placeholder {
   color: var(--text-secondary);
+}
+
+/* Search Hint */
+.search-hint {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 1rem;
+  font-size: 0.85rem;
+  color: var(--warning-color);
+  animation: fadeIn var(--transition-fast) ease-out;
 }
 
 /* Cart Link */
@@ -148,6 +159,19 @@
 .no-games h2 {
   color: var(--text-primary);
   margin-bottom: 1rem;
+}
+
+.no-games p {
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+/* Debug info */
+.debug-info {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  opacity: 0.7;
 }
 
 /* Infinite Scroll Indicator */

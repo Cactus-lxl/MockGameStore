@@ -1,40 +1,100 @@
 import { FilterProps } from "@/types";
 import "../css/Filter.css";
 
+// Define available platforms - updated to match common API platform names
+const PLATFORMS = [
+  "PC",
+  "PlayStation",
+  "PlayStation 2",
+  "PlayStation 3",
+  "PlayStation 4",
+  "PlayStation 5",
+  "Xbox",
+  "Xbox One",
+  "Xbox 360",
+  "Xbox Series S/X",
+  "Nintendo Switch",
+  "Nintendo 3DS",
+  "Nintendo DS",
+  "iOS",
+  "Android",
+  "macOS",
+  "Linux",
+  "PS Vita",
+  "PSP",
+  "Wii",
+  "Wii U",
+  "PC (Microsoft Windows)",
+  "Web"
+];
+
 function Filter({ filter, setFilter }: FilterProps): JSX.Element {
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    const { name, value } = e.target;
-    setFilter(prev => ({ ...prev, [name]: value }));
+  // Check if a platform is selected
+  const isPlatformChecked = (platform: string): boolean => {
+    return filter.platforms.includes(platform);
+  };
+
+  // Handle checkbox change
+  const handleCheckboxChange = (platform: string): void => {
+    setFilter(prev => {
+      if (prev.platforms.includes(platform)) {
+        // Remove platform if unchecked
+        return {
+          platforms: prev.platforms.filter(p => p !== platform)
+        };
+      } else {
+        // Add platform if checked
+        return {
+          platforms: [...prev.platforms, platform]
+        };
+      }
+    });
+  };
+
+  // Select/Deselect all platforms
+  const handleSelectAll = (): void => {
+    setFilter({ platforms: [...PLATFORMS] });
+  };
+
+  const handleDeselectAll = (): void => {
+    setFilter({ platforms: [] });
   };
 
   return (
-    <div className="filter">
-      <select name="Platform" value={filter.Platform} onChange={handleChange}>
-        <option value="">All Platforms</option>
-        <option value="Nintendo Switch">Nintendo Switch</option>
-        <option value="PC">PC</option>
-        <option value="Xbox">Xbox</option>
-        <option value="PlayStation">PlayStation</option>
-      </select>
+    <div className="filter-container">
+      <button className="filter-toggle" type="button">
+        <span className="filter-icon">⚙</span>
+        Platform settings
+      </button>
 
-      {filter.Platform === "Xbox" && (
-        <select name="SubPlatform" value={filter.SubPlatform || ""} onChange={handleChange}>
-          <option value="">All Xbox Games</option>
-          <option value="Xbox">Xbox</option>
-          <option value="Xbox One">Xbox One</option>
-          <option value="Xbox 360">Xbox 360</option>
-        </select>
-      )}
+      <div className="filter-dropdown">
+        <div className="filter-header">
+          <h3>Select Platform</h3>
+          <div className="filter-actions">
+            <button type="button" onClick={handleSelectAll} className="select-all-btn">
+              Select all
+            </button>
+            <button type="button" onClick={handleDeselectAll} className="deselect-all-btn">
+              Cancel Select all
+            </button>
+          </div>
+        </div>
 
-      {filter.Platform === "PlayStation" && (
-        <select name="SubPlatform" value={filter.SubPlatform || ""} onChange={handleChange}>
-          <option value="">All PlayStation Games</option>
-          <option value="PlayStation">PlayStation(1)</option>
-          <option value="PlayStation 2">PlayStation 2</option>
-          <option value="PlayStation 3">PlayStation 3</option>
-          <option value="PlayStation 4">PlayStation 4</option>
-        </select>
-      )}
+        <div className="filter-content">
+          <div className="platform-list">
+            {PLATFORMS.map(platform => (
+              <label key={platform} className="platform-checkbox">
+                <input
+                  type="checkbox"
+                  checked={isPlatformChecked(platform)}
+                  onChange={() => handleCheckboxChange(platform)}
+                />
+                <span className="platform-name">{platform}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { LoginProps } from "@/types";
 import "../css/Login.css";
 import loginLogo from "../assets/loginLogo.png";
@@ -12,10 +12,8 @@ function Login({ setIsValid }: LoginProps): JSX.Element {
   const UN = "Username";
   const PW = "Password";
 
-  const checkInput = (e?: React.FormEvent<HTMLFormElement>): void => {
-    if (e) {
-      e.preventDefault();
-    }
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
     
     if (userName === UN && password === PW) {
       localStorage.setItem("isLoggedIn", "true");
@@ -26,14 +24,14 @@ function Login({ setIsValid }: LoginProps): JSX.Element {
     }
   };
 
-  const handleEnterPress = (e: React.KeyboardEvent<HTMLFormElement>): void => {
-    if (e.key === 'Enter') {
-      checkInput();
+  const handleLogin = (): void => {
+    if (userName === UN && password === PW) {
+      localStorage.setItem("isLoggedIn", "true");
+      setIsValid(true);
+      navigate("/home");
+    } else {
+      alert("Wrong username or password");
     }
-  };
-
-  const createAccount = (): void => {
-    navigate("/newacc");
   };
 
   return (
@@ -41,13 +39,14 @@ function Login({ setIsValid }: LoginProps): JSX.Element {
       <img src={loginLogo} alt="By Gamers for Gamers" className="login-icon" />
 
       <div className="login-info-grid">
-        <form onSubmit={checkInput} className="login-form" onKeyDown={handleEnterPress}>
+        <form onSubmit={handleSubmit} className="login-form">
           <input 
             type="text"
             placeholder="User name or Email address"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             className="UN-input"
+            required
           />
 
           <input 
@@ -56,12 +55,18 @@ function Login({ setIsValid }: LoginProps): JSX.Element {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="PW-input"
+            required
           />
+
+          <button type="submit" className="login-button">
+            Log In
+          </button>
         </form>
 
-        <button type="button" className="create-acc" onClick={createAccount}>
-          Create a new account
-        </button>
+        <div className="login-links">
+          <Link to="/home" className="guest-link">Continue as guest</Link>
+          <Link to="/newacc" className="create-acc-link">Create a new account</Link>
+        </div>
       </div>
     </div>
   );

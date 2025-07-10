@@ -36,6 +36,11 @@ export interface FetchGamesResult {
 
 // Filter types
 export interface FilterState {
+  platforms: string[];
+}
+
+// Old filter state for backward compatibility during migration
+export interface OldFilterState {
   Platform: string;
   SubPlatform: string;
 }
